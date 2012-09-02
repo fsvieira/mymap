@@ -1,0 +1,70 @@
+
+.item_add {
+	background-image:url('layout/add.png');
+	background-repeat:no-repeat;
+	float:left; 
+	width: 32px; 
+	height: 32px;
+	margin-left: 5px;  
+}
+
+.item_delete {
+	background-image:url('layout/delete.png');
+	background-repeat:no-repeat;
+	float:left; 
+	width: 32px; 
+	height: 32px;
+	margin-left: 5px;  
+}
+
+.item_select {
+	float: left; 
+	width: 50%; 
+} 
+
+.item_manager{
+	width: 100%; 
+}
+
+.group {
+	float: left;
+	margin: 0px;
+	/*margin-bottom: 0px;  
+	margin-left: 0px; 
+	margin-right: 0px; */
+	border-style: none;
+	padding-top: 20px; 
+	-moz-border-top-left-radius: 10px;
+	border-top-left-radius: 10px;
+	-moz-border-top-right-radius: 10px;
+	border-top-right-radius: 10px;
+	-moz-border-bottom-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	-moz-border-bottom-right-radius: 10px;
+	border-bottom-right-radius: 10px;
+	background-color: #F90;
+	position: relative; 
+	width: 100%; 
+}
+
+.group .label {
+	position: absolute; 
+	top: -10px; 
+	left: 10px; 
+	background-color: red; 
+	font-size: 15px; 
+	-moz-border-top-left-radius: 5px;
+	border-top-left-radius: 5px;
+	-moz-border-top-right-radius: 5px;
+	border-top-right-radius: 5px;
+	-moz-border-bottom-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	-moz-border-bottom-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	padding: 5px; 
+}
+
+.collapse {
+	width: 100%;
+	clear: both; 
+}
