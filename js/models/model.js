@@ -157,9 +157,10 @@ function Model(args){
 	}; 
 	
 	this.getTupleDict = function(x, y){
-		if(this.field[x]){
+		if(this.field[x] && this.field[x][y]){
 			return this.field[x][y]; 
 		}
+		return null; 
 	}; 
 	
 }; 

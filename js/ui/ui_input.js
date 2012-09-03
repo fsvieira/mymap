@@ -6,6 +6,8 @@ function UI_Input(model, args, defs){
 		this.root.append(this.getLabel()+ " "); 
 	}
 	
+	this.input = null; 
+	
 	if(this.option('type') == 'file'){
 		this.input = $("<input type='file' value='"+this.model.get()+"' />"); 
 	}else{
@@ -14,19 +16,22 @@ function UI_Input(model, args, defs){
 	
 	this.root.append(this.input); 
 	
-	this.model.event('change', function(){this.input.val(this.model.get()); }.bind(this)); 
+	this.model.event('change', function(){
+			if(this.option('type') != 'file'){
+				this.input.val(this.model.get()); 
+			}
+		}.bind(this)); 
 	
 	this.input.change(
 		function(e){
-			// if(this.defs.type){
+			if(this.defs.type){
 				switch(this.defs.type){
-					case 'int': this.model.set(parseInt($(e.target).val())); 
-					default:
-						this.model.set($(e.target).val()); 
+					case 'int': this.model.set(parseInt($(e.target).val())); break; 
+					default: this.model.set($(e.target).val()); 
 				}
-			/*}else{
+			}else{
 				this.model.set($(e.target).val()); 
-			}*/
+			}
 		}.bind(this)
 	); 
 	

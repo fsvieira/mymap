@@ -7,6 +7,8 @@ function TileManager(alpha){
 	this.mkField({'label': 'alpha', 'value':alpha, }); 
 	
 	// TODO: manage tiles? 
+	this.mkField({'label': 'tiles', 'value': {} }); 
+	
 	
 	this.getName = function(){
 		if(this.alpha.get()){
@@ -15,5 +17,15 @@ function TileManager(alpha){
 		return this.name.get(); 
 	}; 
 	
-	
+	this.getTile = function(c, l){
+		var tile = this.tiles.getTupleDict(c, l); 
+		if(tile){
+			return tile; 
+		} 
+		
+		tile = new Tile(c, l); 
+		this.tiles.addTupleDict(c, l, tile); 
+		return tile; 
+		
+	}; 
 }; 
