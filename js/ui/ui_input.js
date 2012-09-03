@@ -2,18 +2,10 @@ function UI_Input(model, args, defs){
 	UI.call(this, model, args, defs); 
 	
 	this.root = $('<div />'); 
-	// this.root = $('<div class="'+model.label+'" >'); 
-	/* if(!this.option('hideLabel')){
-		this.root.append(this.getLabel()+ " "); 
-	}*/
+
 	
 	this.input = null; 
 	
-	/*if(this.option('type') == 'file'){
-		this.input = $("<input type='file' value='"+this.model.get()+"' />"); 
-	}else{
-		this.input = $("<input type='text' value='"+this.model.get()+"' />"); 
-	}*/
 	if(this.option('type') == 'file'){
 		this.input = $("<input type='file' />"); 
 	}else{

@@ -2,19 +2,8 @@ function UI_Items(model, args, defs){
 	UI.call(this, model, args, defs); 
 	
 	this.root = $('<select>'); 
-	// this.getEl().append(this.select); 	
 		
-	this.items = this.option('items'); 
-	if(!this.items){
-		this.items = this.model; 
-		this.item = this.model.get_item(0); 
-		this.choice = false; 
-	}else{
-		this.item = this.model.field;
-		this.choice = true;  
-	}
-	
-	this.update = function(){
+	this.update_select = function(){
 		this.root.html('');
 		// for(i in this.model.field){
 		for( i in this.items.field){
@@ -31,7 +20,7 @@ function UI_Items(model, args, defs){
 		}	
 		
 		this.selected(); 
-	}; 
+	}.bind(this); 
 	
 	this.selected = function(){
 		var option = this.root.find('option:selected'); 
@@ -48,9 +37,31 @@ function UI_Items(model, args, defs){
 	}; 
 	
 	this.root.change(this.selected.bind(this));
-	this.items.event('change', this.update.bind(this)); 
+	
+	this.update = function(model){
+		
+		this.model = model; 
+		if(this.items){
+			this.items.remove_event('change', this.update_select); 
+		}
+		
+		this.items = this.option('items'); 
+		
+		
+		if(!this.items){
+			this.items = this.model; 
+			this.item = this.model.get_item(0); 
+			this.choice = false; 
+			this.items.event('change', this.update_select); 
+		}else{
+			this.item = this.model.field;
+			this.choice = true;  
+		}
+		
+	}; 
 
-	this.update(); 
+	this.update(model); 
+	
 };
 
 

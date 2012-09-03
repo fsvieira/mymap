@@ -2,9 +2,8 @@ function UI_Enum(model, args, defs){
 	UI.call(this, model, args, defs); 
 	
 	this.root = $('<select>'); 
-	// this.getEl().append(this.select); 
 	
-	this.update = function(){
+	this.update_select = function(){
 		this.root.html('');
 		for(i in this.defs.enums){
 			var item = this.defs.enums[i]; 
@@ -16,15 +15,22 @@ function UI_Enum(model, args, defs){
 			}
 			this.root.append(option); 
 		}
-	}; 
+	}.bind(this); 
 	
 	this.root.change(function(){
 		var i = this.root.find('option:selected').val(); 
 		this.model.set(parseInt(i) ); 
 	}.bind(this)); 
 	
-	this.model.event('change', this.update.bind(this)); 
-	
-	this.update(); 
+	this.update = function(model){
+		if(this.model){
+			this.remove_event('change', this.update_select); 
+		}
+		
+		this.model = model; 
+		if(this.model){
+			this.model.event('change', this.update_select); 
+		}
+	}; 
 	
 };  
