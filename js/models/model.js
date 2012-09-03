@@ -38,8 +38,10 @@ function Model(args){
 	}; 
 	
 	this.remove_event = function(event_name, func){
-		i = this.events[event_name].indexOf(func); 
-		this.events[event_name].splice(i, 1); 
+		if(this.events[event_name]){
+			i = this.events[event_name].indexOf(func); 
+			this.events[event_name].splice(i, 1); 
+		}
 	}; 
 	
 	this.trigger_event = function(event){
