@@ -30,5 +30,8 @@ function Map(args){
 		return this.name.get(); 
 	}; 
 	
-
+	var background = new Layer(); 
+	background.name = "Background"; 
+	this.layers.add(background); 
+	
 }; 

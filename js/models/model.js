@@ -67,6 +67,10 @@ function Model(args){
 		}
 	}; 
 	
+	this.toogle = function(){
+		this.field = !this.field; 
+	}; 
+	
 	this.set = function(value){
 		if(!(this.field == value)){
 			this.field = value; 

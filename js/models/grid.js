@@ -13,6 +13,15 @@ function Grid(
 	this.mkField({'label': 'cell_height', 'value':cell_height }); 
 
 
+	this.getWidth = function(){
+		return this.columns*this.cell_width; 
+	}; 
+
+	this.getHeight = function(){
+		return this.lines*this.cell_height; 
+	}; 
+	
+
 	this.getName = function(){
 		var r; 
 		if(this.type.get() == Grid.ORTHOGNAL){

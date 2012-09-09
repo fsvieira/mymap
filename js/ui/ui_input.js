@@ -1,16 +1,26 @@
 function UI_Input(model, args, defs){
 	UI.call(this, model, args, defs); 
 	
+	/*
+	 * TODO: seperate input types, make a class generic class input
+	 */
+	
 	this.root = $('<div />'); 
 
 	
 	this.input = null; 
 	
+	switch(this.option('type')){
+		case 'file': this.input = $("<input type='file' />"); break; 
+		default: this.input = $("<input type='text' />"); 
+	}; 
+	
+	/*
 	if(this.option('type') == 'file'){
 		this.input = $("<input type='file' />"); 
 	}else{
 		this.input = $("<input type='text' />"); 
-	}
+	}*/
 	
 	this.label = $('<div class="label" />'); 
 	this.root.append(this.label); 

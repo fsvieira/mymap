@@ -1,5 +1,5 @@
-function Layer(){
-	Model.call(this); 
+function Layer(args){
+	Model.call(this, args); 
 	this.mkField({'label': 'name','value':"New Layer"}); 
 	this.mkField({'label': 'cells','value': {} }); 
 

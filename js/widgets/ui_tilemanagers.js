@@ -1,23 +1,101 @@
+function UI_Move(mv, args, defs){
+	UI.call(this, mv, args, defs); 
+	
+	this.root = $('<div class="move">'); 
+
+	this.move       = new UI_Boolean(null, args, {'label': 'Move'}); 
+	this.up         = new UI_Boolean(null, args, {'label': 'Up'}); 
+	this.down       = new UI_Boolean(null, args, {'label': 'Down'}); 
+	this.left       = new UI_Boolean(null, args, {'label': 'Left'}); 
+	this.right      = new UI_Boolean(null, args, {'label': 'Right'}); 
+	this.up_left    = new UI_Boolean(null, args, {'label': 'Up Left'}); 
+	this.up_right   = new UI_Boolean(null, args, {'label': 'Up Right'}); 
+	this.down_left  = new UI_Boolean(null, args, {'label': 'Down Left'}); 
+	this.down_right = new UI_Boolean(null, args, {'label': 'Down Right'}); 
+	
+	
+	var group = new UI_Group(null, 
+					{'uis': 
+						[this.move, this.up, this.down, this.left, this.right, this.up_left, this.up_right, this.down_left, this.down_right] 
+					}
+				); 
+	
+	this.root.append(group.root); 
+	
+	this.update = function(mv){
+		if(mv){
+			this.move.update(mv.move); 
+			this.up.update(mv.up); 
+			this.down.update(mv.down);
+			this.left.update(mv.left);
+			this.right.update(mv.right);
+			this.up_left.update(mv.up_left);
+			this.up_right.update(mv.up_right);
+			this.down_left.update(mv.down_left);
+			this.down_right.update(mv.down_right);
+			this.root.show(); 
+		}else{
+			this.move.update(null); 
+			this.up.update(null); 
+			this.down.update(null);
+			this.left.update(null);
+			this.right.update(null);
+			this.up_left.update(null);
+			this.up_right.update(null);
+			this.down_left.update(null);
+			this.down_right.update(null);
+			this.root.hide(); 
+		} 
+		
+	}; 
+	
+	this.update(mv); 
+}; 
+
+function UI_Tile(tile, args, defs){
+	UI.call(this, tile , args, defs); 
+	
+	this.move = new UI_Move(null, args, defs);
+	this.root = this.move.root; 
+	
+	this.update = function(tile){
+		this.move.update(tile); 
+	}; 
+	
+	
+	this.update(tile); 
+	
+}; 
+
 function UI_Tiles(tm, args, defs){
 	UI.call(this, tm, args, defs); 
 
-	this.root = $('<div style="position:relative" />'); 
+	this.root = $('<div/>'); 
+	
+	this.tile = new UI_Tile(null, args, defs); 
+	this.root.append(this.tile.root); 
+	
+	this.tiles = $('<div  style="position: absolute;" />'); 
+	this.root.append(this.tiles); 
 	
 	this.image = new UI_Image(tm, args, defs); 
 	this.canvas_elem = document.createElement("canvas"); 
 	this.canvas_elem.setAttribute('style', 'position: absolute;'); 
-	this.root.append(this.image.root); 
-	this.root.append(this.canvas_elem); 
+	this.tiles.append(this.image.root); 
+	this.tiles.append(this.canvas_elem); 
+	
 	
 	this.canvas = this.canvas_elem.getContext("2d"); 
 	
 	this.select = $("<div class='tm_select' />");
-	this.root.append(this.select); 
+	this.tiles.append(this.select); 
+	
+	
 	
 	this.sc = 0; 
 	this.sl = 0; 
 	
-	this.root.click(function(e){
+	this.tiles.click(function(e){
 			var xy = getPosition(e);
 			this.sc = Math.floor(xy.x/this.model.tile_w.get()); 
 			this.sl = Math.floor(xy.y/this.model.tile_h.get()); 
@@ -37,6 +115,7 @@ function UI_Tiles(tm, args, defs){
 			
 		if(this.canvas_elem.width && this.canvas_elem.height){
 			this.select.show(); 
+			this.tile.update(this.model.getTile(this.sc, this.sl)); 
 		}else{
 			this.select.hide(); 
 		}
@@ -99,9 +178,10 @@ function UI_Tiles(tm, args, defs){
 			this.model.tile_w.event('change', this.draw_grid); 
 			this.model.tile_h.event('change', this.draw_grid);
 			this.image.update(tm);
-			  
+			// this.tile.update(tiles); 
 			this.set_grid(); 
 			this.root.show(); 
+			
 		}else{
 			this.root.hide(); 
 		}
