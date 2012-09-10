@@ -6,4 +6,15 @@ function Layer(args){
 	this.update_grid = function(grid){
 		// alert("TODO update grid"); 
 	}; 
+	
+	this.addTile = function(c, l, tile){
+		var cell = this.cells.getTupleDict(c,l); 
+		if(!cell){
+			cell = new Cell();
+			this.cells.addTupleDict(c,l, cell);  
+		}
+		
+		cell.addTile(tile); 
+	}; 
+	
 }; 

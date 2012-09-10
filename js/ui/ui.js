@@ -1,4 +1,4 @@
-function UI(model, args, defs){
+function UI(args, defs){
 	Model.call(this);
 	this.args = args; 
 	this.defs = defs; 
@@ -23,9 +23,6 @@ function UI(model, args, defs){
 		}
 		return null; 
 	}
-
-	
-	
 
 	
 };

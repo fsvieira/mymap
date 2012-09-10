@@ -1,5 +1,5 @@
-function UI_Boolean(model, args, defs){
-	UI.call(this, model, args, defs); 
+function UI_Boolean(args, defs){
+	UI.call(this, args, defs); 
 	this.root = $('<div />'); 
 	this.input = $("<input type='checkbox' />"); 
 	
@@ -43,7 +43,7 @@ function UI_Boolean(model, args, defs){
 		}
 	}; 
 	
-	this.update(model); 
+	this.update(this.option('model')); 
 	
 	
 }; 

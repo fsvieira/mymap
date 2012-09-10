@@ -1,5 +1,5 @@
-function UI_Text(model, args, defs){
-	UI.call(this, model, args, defs); 
+function UI_Text(args, defs){
+	UI.call(this,args, defs); 
 
 	this.root = $('<div />'); 
 	
@@ -8,11 +8,13 @@ function UI_Text(model, args, defs){
 		if(t != ''){
 			t += ': '; 
 		}
-			
-		t += model.get(); 
+		
+		if(model){	
+			t += model.get(); 
+		}
 		this.root.html(t); 
 	}; 
 	
-	this.update(model); 
+	this.update(this.option('model')); 
 	
 };

@@ -1,5 +1,5 @@
-function UI_ItemsSelect(model, args, defs){
-	UI.call(this, model, args, defs); 
+function UI_ItemsSelect(args, defs){
+	UI.call(this, args, defs); 
 	
 	this.root = $('<select>'); 
 		
@@ -59,7 +59,7 @@ function UI_ItemsSelect(model, args, defs){
 		
 	}; 
 
-	this.update(model, this.option('items')); 
+	this.update(this.option('model'), this.option('items')); 
 	
 };
 

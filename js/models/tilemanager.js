@@ -6,7 +6,6 @@ function TileManager(alpha){
 	this.mkField({'label': 'image', 'value':null, }); 
 	this.mkField({'label': 'alpha', 'value':alpha, }); 
 	
-	// TODO: manage tiles? 
 	this.mkField({'label': 'tiles', 'value': {} }); 
 	
 	

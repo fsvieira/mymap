@@ -1,5 +1,5 @@
-function UI_Enum(model, args, defs){
-	UI.call(this, model, args, defs); 
+function UI_Enum(args, defs){
+	UI.call(this, args, defs); 
 	
 	this.root = $('<select>'); 
 	
@@ -32,5 +32,7 @@ function UI_Enum(model, args, defs){
 			this.model.event('change', this.update_select); 
 		}
 	}; 
+	
+	this.update(this.option('model'));
 	
 };  

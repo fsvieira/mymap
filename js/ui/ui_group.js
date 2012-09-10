@@ -1,5 +1,5 @@
-function UI_Group(model, args, defs){
-	UI.call(this, model, args, defs);
+function UI_Group(args, defs){
+	UI.call(this, args, defs);
 
 	var uis = this.option('uis'); 
 	

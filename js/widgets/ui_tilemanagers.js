@@ -1,20 +1,20 @@
-function UI_Move(mv, args, defs){
-	UI.call(this, mv, args, defs); 
+function UI_Move(args, defs){
+	UI.call(this, args, defs); 
 	
 	this.root = $('<div class="move">'); 
 
-	this.move       = new UI_Boolean(null, args, {'label': 'Move'}); 
-	this.up         = new UI_Boolean(null, args, {'label': 'Up'}); 
-	this.down       = new UI_Boolean(null, args, {'label': 'Down'}); 
-	this.left       = new UI_Boolean(null, args, {'label': 'Left'}); 
-	this.right      = new UI_Boolean(null, args, {'label': 'Right'}); 
-	this.up_left    = new UI_Boolean(null, args, {'label': 'Up Left'}); 
-	this.up_right   = new UI_Boolean(null, args, {'label': 'Up Right'}); 
-	this.down_left  = new UI_Boolean(null, args, {'label': 'Down Left'}); 
-	this.down_right = new UI_Boolean(null, args, {'label': 'Down Right'}); 
+	this.move       = new UI_Boolean(args, {'label': 'Move'}); 
+	this.up         = new UI_Boolean(args, {'label': 'Up'}); 
+	this.down       = new UI_Boolean(args, {'label': 'Down'}); 
+	this.left       = new UI_Boolean(args, {'label': 'Left'}); 
+	this.right      = new UI_Boolean(args, {'label': 'Right'}); 
+	this.up_left    = new UI_Boolean(args, {'label': 'Up Left'}); 
+	this.up_right   = new UI_Boolean(args, {'label': 'Up Right'}); 
+	this.down_left  = new UI_Boolean(args, {'label': 'Down Left'}); 
+	this.down_right = new UI_Boolean(args, {'label': 'Down Right'}); 
 	
 	
-	var group = new UI_Group(null, 
+	var group = new UI_Group(args, 
 					{'uis': 
 						[this.move, this.up, this.down, this.left, this.right, this.up_left, this.up_right, this.down_left, this.down_right] 
 					}
@@ -49,36 +49,58 @@ function UI_Move(mv, args, defs){
 		
 	}; 
 	
-	this.update(mv); 
+	this.update(this.option('mv')); 
 }; 
 
-function UI_Tile(tile, args, defs){
-	UI.call(this, tile , args, defs); 
-	
-	this.move = new UI_Move(null, args, defs);
+function UI_Tile(args, defs){
+	UI.call(this, args, defs); 
+	this.tile = null;
+	this.move = new UI_Move(args, defs);
 	this.root = this.move.root; 
 	
+	this.tiles = this.option('ui_tiles'); 
+	
+	this.tiles.event('change', function(e){
+		this.update(this.tiles.getTile()); 
+	}.bind(this)); 
+	
 	this.update = function(tile){
-		this.move.update(tile); 
+		this.tile = tile; 
+		if(this.tile){
+			this.move.update(tile); 
+		}else{
+			this.move.update(null); 
+		}
 	}; 
 	
 	
-	this.update(tile); 
+	this.getTile = function(){
+		return this.tile; 
+	};
+	
+	this.update(this.option('tile')); 
 	
 }; 
 
-function UI_Tiles(tm, args, defs){
-	UI.call(this, tm, args, defs); 
+function UI_Tiles(args, defs){
+	UI.call(this, args, defs); 
 
 	this.root = $('<div/>'); 
 	
-	this.tile = new UI_Tile(null, args, defs); 
-	this.root.append(this.tile.root); 
+	this.tm = this.option('ui_tm'); 
+	
+	this.tm.event('change', function(e){
+		this.update(e.args.tm); 
+	}.bind(this)); 
+	
+	
+	// this.tile = new UI_Tile(args, defs); 
+	// this.root.append(this.tile.root); 
 	
 	this.tiles = $('<div  style="position: absolute;" />'); 
 	this.root.append(this.tiles); 
 	
-	this.image = new UI_Image(tm, args, defs); 
+	this.image = new UI_Image(args, defs); 
 	this.canvas_elem = document.createElement("canvas"); 
 	this.canvas_elem.setAttribute('style', 'position: absolute;'); 
 	this.tiles.append(this.image.root); 
@@ -91,15 +113,23 @@ function UI_Tiles(tm, args, defs){
 	this.tiles.append(this.select); 
 	
 	
-	
 	this.sc = 0; 
 	this.sl = 0; 
+	
+	this.getTile = function(){
+		if(this.model){
+			return this.model.getTile(this.sc, this.sl); 
+		}else{
+			return null; 
+		}
+	}; 
 	
 	this.tiles.click(function(e){
 			var xy = getPosition(e);
 			this.sc = Math.floor(xy.x/this.model.tile_w.get()); 
 			this.sl = Math.floor(xy.y/this.model.tile_h.get()); 
 			this.draw_select(); 
+			this.trigger_event(new Event(['change', {}]));
 	}.bind(this)); 
 	
 	this.draw_select = function(){
@@ -115,7 +145,7 @@ function UI_Tiles(tm, args, defs){
 			
 		if(this.canvas_elem.width && this.canvas_elem.height){
 			this.select.show(); 
-			this.tile.update(this.model.getTile(this.sc, this.sl)); 
+			// this.tile.update(this.model.getTile(this.sc, this.sl)); 
 		}else{
 			this.select.hide(); 
 		}
@@ -162,12 +192,10 @@ function UI_Tiles(tm, args, defs){
 		this.draw_grid(); 
 	}; 
 	
-	// this.model.tile_w.event('change', this.draw_grid.bind(this)); 
-	// this.model.tile_h.event('change', this.draw_grid.bind(this)); 
 	
 	this.image.event('change', this.set_grid.bind(this)); 
 	
-	// this.set_grid(); 
+	
 	this.update = function(tm){
 		if(this.model){
 			this.model.tile_w.remove_event('change', this.draw_grid); 
@@ -185,14 +213,16 @@ function UI_Tiles(tm, args, defs){
 		}else{
 			this.root.hide(); 
 		}
+		
+		this.trigger_event(new Event(['change', {}]));
 	}; 
 	
-	this.update(tm); 
+	this.update(this.option('tm')); 
 	
 }; 
 
-function UI_Image(tm, args, defs){
-	UI.call(this, tm, args, defs); 
+function UI_Image(args, defs){
+	UI.call(this, args, defs); 
 	
 	this.canvas_elem = document.createElement("canvas"); 
 	this.canvas_elem.setAttribute('style', 'position: absolute;'); 
@@ -243,20 +273,25 @@ function UI_Image(tm, args, defs){
 		}
 	}
 
-	this.update(tm); 
+	this.update(this.option('tm')); 
 	
 }; 
 
-function UI_TileManager(tm, args, defs){
-	UI.call(this, tm, args, defs); 
+function UI_TileManager(args, defs){
+	UI.call(this, args, defs); 
 	
-	 this.name = new UI_Input(null, args, {'label':'Name'});
- 	 this.w = new UI_Input(null, args, {'label':'Tile Width', 'type': 'int', 'hideLabel': true,}); 
-	 this.h = new UI_Input(null, args, {'label':'Tile Height', 'type': 'int', 'hideLabel': true,}); 
-	 var wh = new UI_Tuplo(null, args, {'a': this.w, 'b': this.h, 'label': 'Tile Width x Height', 'separator': 'x' }); 
-	 this.image = new UI_Input(null, args, {'label':'Image', 'type': 'file' }); 	
-	 this.show_tiles = new UI_Tiles(null, args, defs); 
- 	 var ui = new UI_Group(this, {'uis': [this.name, wh, this.image, this.show_tiles]});
+	this.tms = this.option('tms'); 
+	
+	this.tms.event('change', function(e){
+		this.update(e.args.item);
+	}.bind(this));
+	
+	 this.name = new UI_Input(args, {'label':'Name'});
+ 	 this.w = new UI_Input( args, {'label':'Tile Width', 'type': 'int', 'hideLabel': true,}); 
+	 this.h = new UI_Input(args, {'label':'Tile Height', 'type': 'int', 'hideLabel': true,}); 
+	 var wh = new UI_Tuplo( args, {'a': this.w, 'b': this.h, 'label': 'Tile Width x Height', 'separator': 'x' }); 
+	 this.image = new UI_Input( args, {'label':'Image', 'type': 'file' }); 	 
+ 	 var ui = new UI_Group( {'uis': [this.name, wh, this.image, ]});
 	
  	 this.root = ui.root; 
  	 
@@ -267,36 +302,46 @@ function UI_TileManager(tm, args, defs){
 			this.w.update(null); 
 			this.h.update(null); 
 			this.image.update(null); 
-			this.show_tiles.update(null);
+			//this.show_tiles.update(null);
 			this.root.hide(); 	
 		}else{
 			this.name.update(tm.name); 
 			this.w.update(tm.tile_w); 
 			this.h.update(tm.tile_h); 
 			this.image.update(tm.image); 
-			this.show_tiles.update(tm);
+			//this.show_tiles.update(tm);
 			this.root.show(); 
-		} 
+		}
+		
+		this.trigger_event(new Event(['change'], {'tm': tm})); 
 	 }; 
  	 
- 	 this.update(tm); 
+ 	 this.update(this.option('tm')); 
  	 
 }; 
 
-function UI_TileManagers(tms, args, defs){
-	UI.call(this, tms, args, defs); 
+function UI_TileManagers(args, defs){
+	UI.call(this, args, defs); 
 	
-	var b1 = new UI_Button(tms, args, {'func': function(){ this.add(new TileManager(false) ); }.bind(tms) , 'label': 'Add'})
-    var b2 = new UI_Button(tms, args, {'func': function(){ this.add(new TileManager(true) ); }.bind(tms) , 'label': 'Add Alpha'})
-	var m = new UI_Items(tms, args, {'label': 'Maps',}); 	
-	this.tm = new UI_TileManager(null, args, defs); 
-	var ui = new UI_Group(this, {'uis': [b1,b2,  m, this.tm]}); 
+	this.b1 = new UI_Button(args, {'label': 'Add'})
+    this.b2 = new UI_Button(args, {'label': 'Add Alpha'})
+	this.m  = new UI_Items(args, {'label': 'Maps',}); 	
+	// this.tm = new UI_TileManager(args, defs); 
+	var ui  = new UI_Group(args, {'uis': [this.b1,this.b2,  this.m]}); 
 	
-	m.event('change', function(e){
+	this.m.event('change', function(e){
 		var item = e.args['item']; 
-		this.tm.update(item); 
+		this.trigger_event(new Event(['change'], {'item': item}));
+		// this.tm.update(item); 
 	}.bind(this)); 
 	
 	this.root = ui.root; 
+	
+	this.update = function(tms){
+		this.b1.update(function(){ this.add(new TileManager(false) ); }.bind(tms)); 
+		this.b2.update(function(){ this.add(new TileManager(true) ); }.bind(tms)); 
+		this.m.update(tms); 
+	};
+	
 }; 
 

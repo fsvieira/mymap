@@ -1,5 +1,5 @@
-function UI_Input(model, args, defs){
-	UI.call(this, model, args, defs); 
+function UI_Input(args, defs){
+	UI.call(this, args, defs); 
 	
 	/*
 	 * TODO: seperate input types, make a class generic class input
@@ -67,7 +67,7 @@ function UI_Input(model, args, defs){
 		}
 	}; 
 	
-	this.update(model); 
+	this.update(this.option('model')); 
 	
 	
 }; 

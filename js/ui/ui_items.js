@@ -1,5 +1,5 @@
-function UI_Items(model, args, defs){
-	UI.call(this, model, args, defs); 
+function UI_Items(args, defs){
+	UI.call(this, args, defs); 
 	
 	this.root = $('<select>'); 
 		
@@ -45,22 +45,24 @@ function UI_Items(model, args, defs){
 			this.items.remove_event('change', this.update_select); 
 		}
 		
-		this.items = this.option('items'); 
-		
-		
-		if(!this.items){
-			this.items = this.model; 
-			this.item = this.model.get_item(0); 
-			this.choice = false; 
-			this.items.event('change', this.update_select); 
-		}else{
-			this.item = this.model.field;
-			this.choice = true;  
+		if(this.model){
+			this.items = this.option('items'); 
+			
+			
+			if(!this.items){
+				this.items = this.model; 
+				this.item = this.model.get_item(0); 
+				this.choice = false; 
+				this.items.event('change', this.update_select); 
+			}else{
+				this.item = this.model.field;
+				this.choice = true;  
+			}
 		}
 		
 	}; 
 
-	this.update(model); 
+	this.update(this.option('model')); 
 	
 };
 
