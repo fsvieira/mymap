@@ -14,11 +14,11 @@ function Grid(
 
 
 	this.getWidth = function(){
-		return this.columns*this.cell_width; 
+		return this.columns.get()*this.cell_width.get(); 
 	}; 
 
 	this.getHeight = function(){
-		return this.lines*this.cell_height; 
+		return this.lines.get()*this.cell_height.get(); 
 	}; 
 	
 
@@ -47,6 +47,79 @@ function Grid(
 									return new UI_Tuplo(this, args, {'a': a, 'b': b, 'label': 'Cell Width x Height', 'separator': 'x' }); 
 							}.bind(this), 
 	};*/  
+	
+	this.onSelect = function(x, y){
+		var selectColumn = 0; 
+		var selectLine = 0; 
+		
+		if(this.type.get() == Grid.ISOMETRIC){
+			var wm = this.cell_width.get()/2; 
+			var hm = this.cell_height.get()/2; 
+			var cx = Math.floor(x/wm); 	
+			var cy = Math.floor(y/hm);
+			
+			var m=hm/wm; 
+			
+			var yh=0; 
+			if((cx%2) == (cy%2)){
+				m = -m; 
+				yh = hm; 
+			}
+			
+			var my = (x-cx*wm)*m+yh;
+			var s; 
+			
+			if((y-cy*hm) < my){
+				if(cx%2){
+					if(cy%2){
+						selectColumn = Math.floor(cx/2); 
+						selectLine = cy; 
+					}else{
+						selectColumn = Math.floor(cx/2)+1; 
+						selectLine = cy; 
+					}
+				}else{
+					if(cy%2){
+						selectColumn = Math.floor(cx/2); 
+						selectLine = cy; 
+					}else{
+						selectColumn = Math.floor(cx/2); 
+						selectLine = cy; 
+					}
+				}
+			}else{
+				if(cx%2){
+					if(cy%2){
+						selectColumn = Math.floor(cx/2)+1; 
+						selectLine = cy+1; 
+					}else{
+						selectColumn = Math.floor(cx/2);  
+						selectLine = cy+1; 
+					}
+				}else{
+					if(cy%2){
+						selectColumn = Math.floor(cx/2);  
+						selectLine = cy+1; 
+					}else{
+						selectColumn = Math.floor(cx/2);  
+						selectLine = cy+1; 
+					}
+				}
+				
+				
+			}
+			
+			
+			
+			
+		}else{
+			selectColumn = Math.floor(x/this.cell_width.get()); 	
+			selectLine = Math.floor(y/this.cell_height.get());
+		}
+		
+		// return [selectColumn, selectLine]; 
+		return {'c': selectColumn, 'l': selectLine}; 
+	}; 
 	
 }; 
 

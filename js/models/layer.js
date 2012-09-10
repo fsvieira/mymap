@@ -4,6 +4,6 @@ function Layer(args){
 	this.mkField({'label': 'cells','value': {} }); 
 
 	this.update_grid = function(grid){
-		alert("TODO update grid"); 
+		// alert("TODO update grid"); 
 	}; 
 }; 

@@ -30,9 +30,9 @@ function UI_ItemsSelect(model, args, defs){
 		 
 		this.item = this.items.get_item(i); 
 		
-		if(this.choice){
-		   this.model.set(this.item); 
-		}
+		// if(this.choice){
+		this.model.set(this.item); 
+		// }
 		
 		this.trigger_event(new Event( ['change'], {'item': this.item}) );
 	}; 
