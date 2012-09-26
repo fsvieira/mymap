@@ -1,26 +1,8 @@
 function UI_Input(args, defs){
 	UI.call(this, args, defs); 
 	
-	/*
-	 * TODO: seperate input types, make a class generic class input
-	 */
-	
 	this.root = $('<div />'); 
-
-	
-	this.input = null; 
-	
-	switch(this.option('type')){
-		case 'file': this.input = $("<input type='file' />"); break; 
-		default: this.input = $("<input type='text' />"); 
-	}; 
-	
-	/*
-	if(this.option('type') == 'file'){
-		this.input = $("<input type='file' />"); 
-	}else{
-		this.input = $("<input type='text' />"); 
-	}*/
+	this.input = this.input?this.input:$('<input type="text" />'); 
 	
 	this.label = $('<div class="label" />'); 
 	this.root.append(this.label); 
@@ -28,29 +10,14 @@ function UI_Input(args, defs){
 	
 	
 	this.change = function(){
-		if(this.option('type') != 'file'){
-			if(this.model){
-				this.input.val(this.model.get()); 
-			}else{
-				this.input.val(""); 
-			}
-			
+		if(this.model){
+			this.input.val(this.model.get()); 
+		}else{
+			this.input.val(""); 
 		}
+			
 	}.bind(this); 
-		
 	
-	this.input.change(
-		function(e){
-			if(this.defs.type){
-				switch(this.defs.type){
-					case 'int': this.model.set(parseInt($(e.target).val())); break; 
-					default: this.model.set($(e.target).val()); 
-				}
-			}else{
-				this.model.set($(e.target).val()); 
-			}
-		}.bind(this)
-	); 
 	
 	this.update = function(model){
 		if(this.model){
@@ -64,6 +31,10 @@ function UI_Input(args, defs){
 			if(!this.option('hideLabel')){
 				this.label.html(this.getLabel()+ " "); 
 			}
+			
+			this.input.prop('disabled', false);
+		}else{
+			this.input.prop('disabled', true);
 		}
 	}; 
 	
@@ -71,3 +42,46 @@ function UI_Input(args, defs){
 	
 	
 }; 
+
+function UI_InputInt(args, defs){
+	UI_Input.call(this, args, defs); 
+	this.input.addClass('int'); 
+	
+	this.input.change(function(e){
+		var val = parseInt($(e.target).val()); 
+		if(val){
+			this.input.val(val); 
+			this.model.set(val);
+		}else{
+			this.input.val(this.model.get()); 
+			alert('Only Numbers are allowed.'); 
+		}
+	}.bind(this)); 
+	
+	
+}; 
+
+function UI_InputFile(args, defs){
+	this.input = $('<input type="file" />');
+	UI_Input.call(this, args, defs); 
+	this.change = function(){}; 
+	
+	
+	this.input.change(function(e){
+		this.model.set($(e.target).val()); 
+	}.bind(this));
+	
+}; 
+
+function UI_InputText(args, defs){
+	UI_Input.call(this, args, defs); 
+	
+	this.input.addClass('text'); 
+	
+	this.input.change(function(e){
+		this.model.set($(e.target).val()); 
+	}.bind(this));
+	
+}; 
+
+

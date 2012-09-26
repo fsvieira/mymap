@@ -2,12 +2,12 @@ function UI_Grid(args, defs){
 	UI.call(this, args, defs); 
 
 	this.type = new UI_Enum(args, {'enums': ['Orthogonal', 'Isometric']});
-	this.c = new UI_Input(args, {'label':'Columns', 'type':'int', 'hideLabel': true,});  
-	this.l = new UI_Input(args, {'label':'Lines', 'type':'int', 'hideLabel': true,});
+	this.c = new UI_InputInt(args, {'label':'Columns', 'hideLabel': true,});  
+	this.l = new UI_InputInt(args, {'label':'Lines', 'hideLabel': true,});
 	var tcl = new UI_Tuplo(args, {'a': this.c, 'b': this.l, 'label': 'Columns x Lines', 'separator': 'x' }); 
 
-	this.cw = new UI_Input(args, {'label':'Cell width', 'type':'int', 'hideLabel': true, }); 
-	this.ch = new UI_Input(args, {'label':'Cell height', 'type':'int', 'hideLabel': true,}); 
+	this.cw = new UI_InputInt(args, {'label':'Cell width', 'hideLabel': true, }); 
+	this.ch = new UI_InputInt(args, {'label':'Cell height', 'hideLabel': true,}); 
 	var twh = new UI_Tuplo(args, {'a': this.cw, 'b': this.ch, 'label': 'Cell Width x Height', 'separator': 'x' }); 
 
 	var ui = new UI_Group(args, {'uis': [this.type, tcl, twh]}); 

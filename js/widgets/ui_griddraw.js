@@ -24,6 +24,7 @@ function UI_GridDraw(args, defs){
 										
 		if(this.grid.type.get()==1){
 			x += this.grid.cell_width.get()/2; 
+			y -= this.grid.cell_height.get();
 		}
 							
 		this.trigger_event(new Event(['select'], {'c': this.sx, 'l':this.sy}));

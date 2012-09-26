@@ -3,12 +3,14 @@ function UI_Enum(args, defs){
 	
 	this.root = $('<select>'); 
 	
+	this.enums = this.option('enums'); 
+	
 	this.update_select = function(){
 		this.root.html('');
-		for(i in this.defs.enums){
-			var item = this.defs.enums[i]; 
+		for(i in this.enums){
+			var item = this.enums[i]; 
 			var option; 
-			if(this.model.field == i){
+			if(this.model && this.model.field == i){
 				option = $('<option value="'+i+'" selected="selected" >'+item+'</option>'); 
 			}else{
 				option = $('<option value="'+i+'">'+item+'</option>'); 
@@ -19,7 +21,7 @@ function UI_Enum(args, defs){
 	
 	this.root.change(function(){
 		var i = this.root.find('option:selected').val(); 
-		this.model.set(parseInt(i) ); 
+		this.model.set(parseInt(i)); 
 	}.bind(this)); 
 	
 	this.update = function(model){
@@ -31,6 +33,8 @@ function UI_Enum(args, defs){
 		if(this.model){
 			this.model.event('change', this.update_select); 
 		}
+		
+		this.update_select(); 
 	}; 
 	
 	this.update(this.option('model'));

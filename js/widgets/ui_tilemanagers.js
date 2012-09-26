@@ -286,11 +286,11 @@ function UI_TileManager(args, defs){
 		this.update(e.args.item);
 	}.bind(this));
 	
-	 this.name = new UI_Input(args, {'label':'Name'});
- 	 this.w = new UI_Input( args, {'label':'Tile Width', 'type': 'int', 'hideLabel': true,}); 
-	 this.h = new UI_Input(args, {'label':'Tile Height', 'type': 'int', 'hideLabel': true,}); 
+	 this.name = new UI_InputText(args, {'label':'Name'});
+ 	 this.w = new UI_InputInt( args, {'label':'Tile Width', 'hideLabel': true,}); 
+	 this.h = new UI_InputInt(args, {'label':'Tile Height', 'hideLabel': true,}); 
 	 var wh = new UI_Tuplo( args, {'a': this.w, 'b': this.h, 'label': 'Tile Width x Height', 'separator': 'x' }); 
-	 this.image = new UI_Input( args, {'label':'Image', 'type': 'file' }); 	 
+	 this.image = new UI_InputFile( args, {'label':'Image', }); 	 
  	 var ui = new UI_Group( {'uis': [this.name, wh, this.image, ]});
 	
  	 this.root = ui.root; 

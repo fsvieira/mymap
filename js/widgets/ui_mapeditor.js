@@ -2,7 +2,7 @@ function UI_MapEditor(project, args, defs){
 	UI.call(this, args, defs); 
 
 	this.version = new UI_Text(args, {'label':'Version'});
-	this.name = new UI_Input(args, {'label':'Name'}); 
+	this.name = new UI_InputText(args, {'label':'Name'}); 
 	this.grids = new UI_Grids(args, defs); 
 	this.tileManagers = new UI_TileManagers(args, defs);
 	this.maps = new UI_Maps(args, defs); 

@@ -1,8 +1,8 @@
 function UI_Map(args, defs){
 	UI.call(this, args, defs); 
-	this.name = new UI_Input(args, {'label':'Name'}); 
+	this.name = new UI_InputText(args, {'label':'Name'}); 
 	this.grid = new UI_ItemsSelect(args, {'label':'Grid', 'items': null}); 
-	this.unity_layer = new UI_Input(args, {'label':'Unity Layer', 'type': 'int'});  
+	this.unity_layer = new UI_InputInt(args, {'label':'Unity Layer', });  
 	this.layers = new UI_Layers(args, {'label':'Layers'}); 
 	
 	
