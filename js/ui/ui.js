@@ -1,5 +1,5 @@
 function UI(args, defs){
-	Model.call(this);
+	Model.call(this, args);
 	this.args = args; 
 	this.defs = defs; 
 	

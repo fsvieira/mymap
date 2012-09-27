@@ -7,25 +7,15 @@ function Event(names, args){
 
 function Model(args){
 	
-	if(args){
-		this.parent = args.parent?args.parent:[]; 
-		this.label = args.label?args.label:""; 
-		this.father = args.father?args.father:null; 
-		if(this.father){
-			this.parent.push(this.father); 
-		}; 
-		this.field = args.value; 
-		this.ui = args.ui; 
-		this.desc = args.desc?args.desc:{}; 
-	}else{
-		this.parent = []; 
-		this.label = ""; 
-		this.father = null; 
+	if(!args){
+		args = {};
 	}
-	this.children = [];
+	
+	this.label = args.label?args.label:""; 
+	this.father = args.father?args.father:null; 
+	this.field = args.value; 
 	
 	this.fields = []; 
-	
 	
 	this.events = {}; 
 	
@@ -48,6 +38,10 @@ function Model(args){
 		
 		if(!(this in event.done)){
 			event.done.push(this); 
+
+			if(this.father){
+				this.father.trigger_event(new Event(['change', ], {'model': this.father, 'event': event})); 
+			}; 
 			
 			for(i in event.names){
 				if(event.names[i] in this.events){
@@ -56,12 +50,6 @@ function Model(args){
 						e[j](event); 
 					}
 				}
-			}
-			
-	
-						
-			for(p in this.parent){
-				this.parent[p].trigger_event(new Event(['change'], {'event': event, 'model' : this.parent[p]})); 
 			}
 			
 		}
@@ -82,15 +70,6 @@ function Model(args){
 		return this.field; 
 	}; 
 
-	this.setRelation = function(item){
-		item.insertInList(this, item.parent); 
-		this.insertInList(item, this.children); 
-	}; 
-	
-	this.removeRelation = function(item){
-		item.removeInList(this, item.parent); 
-		this.removeInList(item, this.children);
-	}; 
 	
 	this.getName = function(){
 		return ""; 
@@ -101,7 +80,6 @@ function Model(args){
 		var n = new Model(args); 
 		this[args.label] = n; 
 		this.fields.push(n); 
-		this.setRelation(n); 
 	}; 
 
 	this.insertInList = function(item, list){
@@ -112,9 +90,13 @@ function Model(args){
 		return false; 
 	}; 
 
+	this.change = function(event){
+		this.trigger_event(new Event(['change'], {'model':this, 'event': event})); 
+	}.bind(this); 
+
 	this.insert = function(item){
 		if(insertInList(item, this.field)){
-			this.setRelation(item); 
+			item.event('change', this.change); 
 			this.trigger_event(new Event(['change', 'add'], {'model':this, 'index': list.length-1}) ); 
 		} 
 	}; 
@@ -128,25 +110,22 @@ function Model(args){
 		return false; 
 	}; 
 
-	this.remove = function(item){
-		
-		if(this.removeInList(item, this.field)){
-			this.removeRelation(item); 
+	this.remove = function(item){		
+		if(this.removeInList(item, this.field)){ 
+			item.remove_event('change', this.change); 
 			this.trigger_event(new Event(['change', 'remove'], {'model':this, 'index': index}) ); 
 		}
 	}; 
 
 	this.remove_index = function(index){
 		item = this.field[index]; 
-		this.field.splice(index, 1); 
-		this.removeRelation(item); 
-		this.trigger_event(new Event(['change', 'remove'], {'model':this, 'index': index}) ); 
+		this.remove(item); 
 	}; 
 
 	
 	this.add = function(item){
 		this.field.push(item); 
-		this.setRelation(item);  
+		item.event('change', this.change); 
 		this.trigger_event(new Event(['change', 'add'], {'model':this, 'index': this.field.length-1}) ); 
 	}; 
 	
@@ -159,7 +138,7 @@ function Model(args){
 			this.field[x] = {}; 
 		}
 		this.field[x][y] = item;
-		this.setRelation(item);  
+		item.event('change', this.change); 
 	}; 
 	
 	this.getTupleDict = function(x, y){

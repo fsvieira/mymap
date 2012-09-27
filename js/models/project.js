@@ -1,5 +1,5 @@
 function Project(){
-	Model.call(this); 
+	Model.call(this, {}); 
 	this.mkField({'label': 'version', 'value':0 });
 	this.mkField({'label': 'name', 'value':"New Project"});
 	this.mkField({'label': 'grids', 'value':[],});

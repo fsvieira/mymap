@@ -108,7 +108,6 @@ function Grid(
 			selectLine = Math.floor(y/this.cell_height.get());
 		}
 		
-		// return [selectColumn, selectLine]; 
 		return {'c': selectColumn, 'l': selectLine}; 
 	}; 
 	
