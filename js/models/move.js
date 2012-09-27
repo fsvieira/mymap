@@ -1,5 +1,5 @@
-function Move(){
-	Model.call(this); 
+function Move(args){
+	Model.call(this, args); 
 	this.mkField({'label': 'move', 'value':false}); 
 	this.mkField({'label': 'up', 'value':false}); 
 	this.mkField({'label': 'down', 'value':false}); 

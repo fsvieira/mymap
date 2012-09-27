@@ -8,7 +8,32 @@ function TileManager(alpha){
 	
 	this.mkField({'label': 'tiles', 'value': {} }); 
 	
-	
+	this.image_cache = new Image(); 
+	this.image_cache.onload = function(){
+		this.trigger_event(new Event(['ready'], {'model': this})); 
+	}.bind(this); 
+
+	// TODO: Pass image load to here. 
+	this.image.event('change', 
+		function(){
+			if(this.image.get()){
+				this.image_cache.src = 'images/'+ this.image.get(); 
+			}else{
+				this.image_cache.src = ''; 
+			}
+			
+		}.bind(this)
+	); 
+
+		
+	this.getImage = function(){
+		return this.image_cache; 
+	}; 	
+		
+	this.isAlpha = function(){
+		return this.alpha.get(); 
+	}; 	
+		
 	this.getName = function(){
 		if(this.alpha.get()){
 			return 'alpha - ' + this.name.get(); 
@@ -22,9 +47,11 @@ function TileManager(alpha){
 			return tile; 
 		} 
 		
-		tile = new Tile(c, l); 
+		tile = new Tile(this, c, l); 
 		this.tiles.addTupleDict(c, l, tile); 
 		return tile; 
 		
 	}; 
+	
+	
 }; 

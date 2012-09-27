@@ -1,7 +1,7 @@
 function UI_GridDraw(args, defs){
 	UI.call(this, args, defs); 
 	
-	this.root = $('<div class="grid" style="position:relative;"/>'); 
+	this.root = $('<div class="grid" />'); 
 	this.canvas_elem = document.createElement('canvas'); 
 	this.canvas_elem.setAttribute('style', 'position: absolute;'); 
 	this.canvas = this.canvas_elem.getContext("2d"); 

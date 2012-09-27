@@ -58,7 +58,6 @@ function UI_InputInt(args, defs){
 		}
 	}.bind(this)); 
 	
-	
 }; 
 
 function UI_InputFile(args, defs){

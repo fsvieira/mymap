@@ -10,11 +10,23 @@ function Layer(args){
 	this.addTile = function(c, l, tile){
 		var cell = this.cells.getTupleDict(c,l); 
 		if(!cell){
-			cell = new Cell();
+			var grid = this.father.grid.get(); 
+			var pos; 
+			if(grid){
+				pos = grid.getPosition(c, l); 
+			}else{
+				pos = {'x': 10, 'y': 10, 'z':0}; 
+			}
+			
+			cell = new Cell(pos);
 			this.cells.addTupleDict(c,l, cell);  
 		}
 		
-		cell.addTile(tile); 
+		cell.setTile(tile); 
+	}; 
+	
+	this.getCell = function(c, l){
+		return cell = this.cells.getTupleDict(c,l); 
 	}; 
 	
 }; 

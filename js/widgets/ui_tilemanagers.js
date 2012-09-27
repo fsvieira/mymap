@@ -56,9 +56,15 @@ function UI_Tile(args, defs){
 	UI.call(this, args, defs); 
 	this.tile = null;
 	this.move = new UI_Move(args, defs);
-	this.root = this.move.root; 
+	this.root = $('<div />');  
 	
 	this.tiles = this.option('ui_tiles'); 
+	this.frames = new UI_InputInt( args, {'label':'Frames',}); 
+	this.repeat = new UI_InputInt( args, {'label':'Repeat',}); 
+	
+	this.root.append(this.frames.root); 
+	this.root.append(this.repeat.root); 
+	this.root.append(this.move.root); 
 	
 	this.tiles.event('change', function(e){
 		this.update(this.tiles.getTile()); 
@@ -68,8 +74,13 @@ function UI_Tile(args, defs){
 		this.tile = tile; 
 		if(this.tile){
 			this.move.update(tile); 
+			this.frames.update(tile.frames); 
+			this.repeat.update(tile.repeat); 
+			this.root.show();
 		}else{
+			this.root.hide();
 			this.move.update(null); 
+			
 		}
 	}; 
 	
@@ -85,7 +96,7 @@ function UI_Tile(args, defs){
 function UI_Tiles(args, defs){
 	UI.call(this, args, defs); 
 
-	this.root = $('<div/>'); 
+	this.root = $('<div class="tiles" />'); 
 	
 	this.tm = this.option('ui_tm'); 
 	
@@ -97,7 +108,7 @@ function UI_Tiles(args, defs){
 	// this.tile = new UI_Tile(args, defs); 
 	// this.root.append(this.tile.root); 
 	
-	this.tiles = $('<div  style="position: absolute;" />'); 
+	this.tiles = $('<div style="position: relative;"/>'); 
 	this.root.append(this.tiles); 
 	
 	this.image = new UI_Image(args, defs); 
@@ -117,7 +128,7 @@ function UI_Tiles(args, defs){
 	this.sl = 0; 
 	
 	this.getTile = function(){
-		if(this.model){
+		if(this.model.image.get()){
 			return this.model.getTile(this.sc, this.sl); 
 		}else{
 			return null; 
@@ -187,6 +198,9 @@ function UI_Tiles(args, defs){
 	}.bind(this); 
 	
 	this.set_grid = function(){
+		this.tiles.width(this.image.canvas_elem.width); 
+		this.tiles.height(this.image.canvas_elem.height); 
+		
 		this.canvas_elem.width = this.image.canvas_elem.width; 
 		this.canvas_elem.height = this.image.canvas_elem.height; 
 		this.draw_grid(); 

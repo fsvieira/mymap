@@ -11,6 +11,7 @@ function UI_MapEditor(project, args, defs){
 	this.show_tiles = new UI_Tiles(args, {'ui_tm': this.tm}); 
 	this.tile = new UI_Tile(args, {'ui_tiles': this.show_tiles}); 
 	this.map_draw = new UI_MapDraw(args, {'ui_map': this.map,'ui_tile':this.tile}); 
+	this.cell = new UI_Cell(args, {'ui_mapdraw': this.map_draw}); 
 
 	var ui = new UI_Group(this, {
 		'uis': [
@@ -24,6 +25,7 @@ function UI_MapEditor(project, args, defs){
 			this.show_tiles, 
 			this.tile, 
 			this.map_draw,
+			this.cell,
 		] 
 	}); 
 	

@@ -196,7 +196,7 @@ input:focus {
 	background:url(images/test.png) 0 0;
 }
 
-.layers {
+/*.layers {
 	clear: both;
 }
 
@@ -214,7 +214,7 @@ input:focus {
 
 .layer_select{
 	 background-color:#9CF; 
-}
+}*/
 
 #footer p {
 	clear:both;

@@ -33,6 +33,10 @@ function Grid(
 		r+= '-' + this.columns.get() + 'x' + this.lines.get() + '|' +  this.cell_width.get() + 'x' + this.cell_height.get(); 
 		return r; 
 	}; 
+
+	this.getPosition = function(c, l){
+		return {'x': c*this.getWidth(), 'y': this.getHeight(), 'z': 0}; 
+	}; 
 	
 	
 	this.onSelect = function(x, y){
