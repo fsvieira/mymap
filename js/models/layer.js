@@ -5,6 +5,12 @@ function Layer(args){
 
 	this.update_grid = function(grid){
 		// alert("TODO update grid"); 
+	}.bind(this); 
+
+	this.father.grid.event('change', this.update_grid); 
+	
+	this.free = function(){
+		this.father.grid.remove_event('change', this.update_grid); 
 	}; 
 	
 	this.addTile = function(c, l, tile){

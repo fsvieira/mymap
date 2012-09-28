@@ -20,11 +20,20 @@ function Cell(position){
 	
 	
 	this.getTileWidth = function(){
-		return this.tile.get().getWidth(); 
+		if(this.image){
+			return this.image[0].width; 
+		}
+		
+		return 0; 
+		
 	}; 
 	
 	this.getTileHeight = function(){
-		return this.tile.get().getHeight(); 
+		if(this.image){
+			return this.image[0].height; 
+		}
+		
+		return 0; 
 	}; 
 	
 	// render image, 
@@ -33,8 +42,8 @@ function Cell(position){
 		if(this.alpha.get() != null){
 			alpha_image = this.alpha.get().getFrame(frame); 
 
-			var tile_pix = tile_image.data;
-			var alpha_pix = alpha_image.data;
+			var tile_pix = tile_image;
+			var alpha_pix = alpha_image;
 		
 			// ** apply alpha:
 			for(var x=0; x!=tile_image.width; x++){
@@ -48,7 +57,7 @@ function Cell(position){
 			}
 		}
 		
-		this.image.push(tile_image); 
+		this.image.push(tile_pix); 
 		
 	}; 
 	

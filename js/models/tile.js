@@ -23,24 +23,19 @@ function Tile(father, column, line){
 		frame = Math.ceil((frame % this.frames.get()*this.repeat.get())/this.repeat.get()); 
 		var newCanvas = document.createElement('canvas');
 		var new_ctx = newCanvas.getContext('2d');  
-		newCanvas.width = this.getWidth(); 
-		newCanvas.height = this.getHeight(); 
-		new_ctx.drawImage(
-				this.father.getImage(),
-				(frame+this.column.get())*this.getWidth(),
-				this.line.get()*this.getHeight(), 
-				this.getWidth(), 
-				this.getHeight(),
-				0,0,
-				this.getWidth(), 
-				this.getHeight()
-		);  
 
-		return new_ctx.getImageData(
-					0, 0, 
-					this.getWidth(), 
-					this.getHeight()
-				);
+		var xi = (frame+this.column.get())*this.getWidth(); 
+		var yi = this.line.get()*this.getHeight();
+
+		var imgd = this.father.getImage(); 
+		newCanvas.width = imgd.width; 
+		newCanvas.height = imgd.height; 
+
+		new_ctx.putImageData(imgd, 0, 0);
+			
+		imgd = new_ctx.getImageData(xi, yi, this.getWidth(), this.getHeight()); 
+		return imgd; 
+		
 
 	};
 	

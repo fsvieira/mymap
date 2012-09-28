@@ -20,6 +20,9 @@ function Model(args){
 	this.events = {}; 
 	
 	this.event = function(event_name, func){
+		if(!func){
+			alert('Invalid Func!'); 
+		}; 
 		if(!this.events[event_name]){
 			this.events[event_name] = []; 
 		}
@@ -28,9 +31,11 @@ function Model(args){
 	}; 
 	
 	this.remove_event = function(event_name, func){
-		if(this.events[event_name]){
+		if(event_name in this.events){
 			i = this.events[event_name].indexOf(func); 
-			this.events[event_name].splice(i, 1); 
+			if(i != -1){
+				this.events[event_name].splice(i, 1); 
+			}
 		}
 	}; 
 	

@@ -242,48 +242,29 @@ function UI_Image(args, defs){
 	this.canvas_elem.setAttribute('style', 'position: absolute;'); 
 	this.root = this.canvas_elem; 
 	this.canvas = this.canvas_elem.getContext("2d"); 
+	this.canvas_elem.height = 0; 
+	this.canvas_elem.width = 0; 
 
 	this.load_image = function(){
-		this.canvas_elem.height = 0; 
-		this.canvas_elem.width = 0; 
-		if(this.model.image.get() != null){
-			var path = 'images/'+this.model.image.get(); 
-			this.image = new Image(); 
-			this.image.onload = function(){
-				this.canvas_elem.height = this.image.height; 
-				this.canvas_elem.width = this.image.width; 
-				this.canvas.drawImage(this.image, 0, 0); 
-				
-				if(this.image.height < this.model.tile_h.get()){
-					this.model.tile_h.set(this.image.height); 
-				}
-				
-				if(this.image.width < this.model.tile_w.get()){
-					this.model.tile_w.set(this.image.width); 
-				}
-				
-				if(this.model.alpha.get()){
-					imgd = this.canvas.getImageData(0, 0, this.image.width, this.image.height); 
-					bw_data(imgd); 
-					this.canvas.putImageData(imgd, 0, 0,this.image.width, this.image.height); 
-				}
-				this.trigger_event(new Event(['change'], {'model': this})); 
-			}.bind(this); 
-			this.image.src = path; 
-		}else{
-			this.trigger_event(new Event(['change'], {'model': this})); 
-		}
-		
+		var imgd = this.model.getImage(); 
+		this.canvas_elem.height = imgd.height; 
+		this.canvas_elem.width = imgd.width; 
+		this.canvas.putImageData(imgd, 0, 0,imgd.width, imgd.height); 
+		this.trigger_event(new Event(['change'], {'model': this})); 
 	}.bind(this); 
+	
 
 	this.update = function(model){
 		if(this.model){
-			this.model.image.remove_event('change', this.load_image); 
+			this.model.remove_event('ready', this.load_image); 
 		}
 		
 		this.model = model; 
 		if(this.model){
-			this.load_image(); 
+			this.model.event('ready', this.load_image); 
+			if(this.model.imgd){
+				this.load_image(); 
+			}
 		}
 	}
 

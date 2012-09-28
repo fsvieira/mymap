@@ -10,13 +10,13 @@ function Map(args){
 	this.mkField({'label': 'layers','value':[],});	
 	
 	// Update all layers if grid change.
-	this.update_layers = function(){
+	/*this.update_layers = function(){
 		for(i in this.layers.get()){
 			this.layers.get_item(i).update_grid(this.grid); 	
 		}
-	}; 
+	};*/ 
 	
-	this.grid.event('change', this.update_layers.bind(this)); 
+	// this.grid.event('change', this.update_layers.bind(this)); 
 
 	
 	// update grid if grid is removed from list
@@ -30,8 +30,13 @@ function Map(args){
 		return this.name.get(); 
 	}; 
 	
-	var background = new Layer(); 
-	background.name = "Background"; 
-	this.layers.add(background); 
+	this.addLayer = function(){
+		var layer = new Layer({'father': this,}); 	
+		this.layers.add(layer);  
+		return layer; 
+	}; 
 	
+	var background = this.addLayer(); 
+	background.name = "Background"; 
+
 }; 

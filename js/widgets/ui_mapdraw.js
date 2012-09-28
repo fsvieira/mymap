@@ -26,7 +26,7 @@ function UI_Sprite(cell, args, defs){
 	}
 	
 	this.setPosition = function(pos){
-		this.root.setAttribute('style', 'top: '+pos.y+'px; left: '+ pos.x + '; z-index: ' + pos.z + ';' ); 
+		this.root.setAttribute('style', 'top: '+pos.y+'px; left: '+ pos.x + 'px; z-index: ' + pos.z + ';' ); 
 	};
 	
 	this.update = function(cell){
@@ -179,7 +179,7 @@ function UI_MapDraw(args, defs){
 		
 		if(map){
 			this.grid.update(map.grid.get()); 
-			this.map.grid.event('change', this.upgrade_grid); 
+			this.map.grid.event('change', this.update_grid); 
 			var l; 
 			var layers = this.map.layers.get(); 
 			for(l in layers){

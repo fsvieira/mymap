@@ -35,7 +35,7 @@ function Grid(
 	}; 
 
 	this.getPosition = function(c, l){
-		return {'x': c*this.getWidth(), 'y': this.getHeight(), 'z': 0}; 
+		return {'x': c*this.cell_width.get(), 'y': l*this.cell_height.get(), 'z': 0}; 
 	}; 
 	
 	
