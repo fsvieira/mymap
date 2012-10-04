@@ -40,9 +40,9 @@ function UI_Grids(args, defs){
 	UI.call(this, args, defs); 
 	
 	this.b = new UI_Button(args, {'label': 'Add'});
-	this.m = new UI_Items(args, {'label': 'Grids'});
+	this.m = new UI_Items(args, defs);
 	this.grid = new UI_Grid(args, defs); 
-	var ui = new UI_Group(args, {'uis': [this.b, this.m, this.grid],}); 
+	var ui = new UI_Group(args, {'uis': [this.b, this.m, this.grid], label: 'Grids'}); 
 	
 	this.m.event('change', function(e){
 		var item = e.args['item']; 

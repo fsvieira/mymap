@@ -3,7 +3,7 @@ function UI_MapEditor(project, args, defs){
 
 	this.version = new UI_Text(args, {'label':'Version'});
 	this.name = new UI_InputText(args, {'label':'Name'}); 
-	this.grids = new UI_Grids(args, defs); 
+	this.grids = new UI_Grids(args, {'label': 'Grids' }); 
 	this.tileManagers = new UI_TileManagers(args, defs);
 	this.maps = new UI_Maps(args, defs); 
 	this.map = new UI_Map(args, {'maps': this.maps}); 
@@ -13,19 +13,31 @@ function UI_MapEditor(project, args, defs){
 	this.map_draw = new UI_MapDraw(args, {'ui_map': this.map,'ui_tile':this.tile}); 
 	this.cell = new UI_Cell(args, {'ui_mapdraw': this.map_draw}); 
 
-	var ui = new UI_Group(this, {
+	var ui = new UI_Group({
 		'uis': [
-			this.version, 
-			this.name, 
-			this.grids, 
-			this.maps, 
-			this.map, 
-			this.tileManagers, 
-			this.tm,
-			this.show_tiles, 
-			this.tile, 
-			this.map_draw,
-			this.cell,
+			new UI_Group({	
+					'uis' : [ this.version, this.name, this.grids],
+					'label' : 'Project Settings', 
+			}),  
+			
+			new UI_Group({
+				'uis' : [ 
+					this.tileManagers, 
+					this.tm,
+					this.show_tiles, 
+					this.tile, 
+				], 'label': 'Tile Manager'
+			}), 
+
+			new UI_Group({
+				'uis': [
+					this.maps, 
+					this.map, 
+					this.map_draw,
+					this.cell,
+				], 
+				'label': 'Map Editor', 
+			}), 
 		] 
 	}); 
 	

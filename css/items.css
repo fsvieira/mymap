@@ -26,12 +26,9 @@
 	width: 100%; 
 }
 
-.group {
+/* .group {
 	float: left;
 	margin: 0px;
-	/*margin-bottom: 0px;  
-	margin-left: 0px; 
-	margin-right: 0px; */
 	border-style: none;
 	padding-top: 20px; 
 	-moz-border-top-left-radius: 10px;
@@ -46,7 +43,8 @@
 	position: relative; 
 	width: 100%; 
 }
-
+*/
+/*
 .group .label {
 	position: absolute; 
 	top: -10px; 
@@ -63,6 +61,7 @@
 	border-bottom-right-radius: 5px;
 	padding: 5px; 
 }
+*/
 
 .collapse {
 	width: 100%;
