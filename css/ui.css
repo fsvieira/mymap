@@ -42,3 +42,103 @@
 }
 
 
+
+.move_active,
+.move_inactive,
+.up_active,
+.up_inactive,
+.down_active,
+.down_inactive,
+.left_active,
+.left_inactive,
+.right_active,
+.right_inactive,
+.up_left_active,
+.up_left_inactive,
+.up_right_active,
+.up_right_inactive,
+.down_left_active,
+.down_left_inactive, 
+.down_right_active,
+.down_right_inactive,
+.icon {
+	width: 32px; 
+	height: 32px;
+}
+
+/* Move */
+.move_active {
+  background-image:url('layout/active.png');
+}
+
+
+.move_inactive {
+	background-image:url('layout/deactive.png');
+}
+
+
+.up_active {
+	background-image:url('layout/up.png');
+}
+ 
+.up_inactive {
+	background-image:url('layout/up_disable.png');
+}
+ 
+.down_active{
+	background-image:url('layout/down.png');
+}
+ 
+.down_inactive {
+	background-image:url('layout/down_disable.png');
+}
+ 
+.left_active{
+	background-image:url('layout/left.png');
+}
+ 
+.left_inactive {
+	background-image:url('layout/left_disable.png');
+}
+ 
+.right_active{
+	background-image:url('layout/right.png');
+}
+ 
+.right_inactive {
+	background-image:url('layout/right_disable.png');
+}
+ 
+.up_left_active{
+	background-image:url('layout/up_left.png');
+}
+ 
+.up_left_inactive {
+	background-image:url('layout/up_left_disable.png');
+}
+ 
+.up_right_active{
+	background-image:url('layout/up_right.png');
+}
+ 
+.up_right_inactive {
+	background-image:url('layout/up_right_disable.png');
+}
+ 
+.down_left_active{
+	background-image:url('layout/down_left.png');
+}
+ 
+.down_left_inactive {
+	background-image:url('layout/down_left_disable.png');
+}
+ 
+.down_right_active{
+	background-image:url('layout/down_right.png');
+}
+ 
+.down_right_inactive{
+	background-image:url('layout/down_right_disable.png');
+}
+ 
+

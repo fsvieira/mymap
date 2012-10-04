@@ -53,7 +53,7 @@ function UI_Grids(args, defs){
 	
 	this.update = function(grids){
 		if(grids){
-			this.b.update(function(){ this.add(new Grid(Grid.ORTHOGNAL, 10, 7, 32, 32) ); }.bind(grids)); 
+			this.b.update(function(){ this.add(new Grid(Grid.ORTHOGNAL, 10, 7, 64, 64) ); }.bind(grids)); 
 			this.m.update(grids); 
 		}else{
 			this.b.update(null); 

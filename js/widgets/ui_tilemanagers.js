@@ -3,25 +3,70 @@ function UI_Move(args, defs){
 	
 	this.root = $('<div class="move">'); 
 
-	this.move       = new UI_Boolean(args, {'label': 'Move'}); 
-	this.up         = new UI_Boolean(args, {'label': 'Up'}); 
-	this.down       = new UI_Boolean(args, {'label': 'Down'}); 
-	this.left       = new UI_Boolean(args, {'label': 'Left'}); 
-	this.right      = new UI_Boolean(args, {'label': 'Right'}); 
-	this.up_left    = new UI_Boolean(args, {'label': 'Up Left'}); 
-	this.up_right   = new UI_Boolean(args, {'label': 'Up Right'}); 
-	this.down_left  = new UI_Boolean(args, {'label': 'Down Left'}); 
-	this.down_right = new UI_Boolean(args, {'label': 'Down Right'}); 
+	this.move       = new UI_BooleanIcon(args, {'label': 'Move', 'active': 'move_active', 'inactive': 'move_inactive' }); 
+	this.up         = new UI_BooleanIcon(args, {'label': 'Up', 'active': 'up_active', 'inactive': 'up_inactive'}); 
+	this.down       = new UI_BooleanIcon(args, {'label': 'Down', 'active': 'down_active', 'inactive': 'down_inactive'}); 
+	this.left       = new UI_BooleanIcon(args, {'label': 'Left', 'active': 'left_active', 'inactive': 'left_inactive'}); 
+	this.right      = new UI_BooleanIcon(args, {'label': 'Right', 'active': 'right_active', 'inactive': 'right_inactive'}); 
+	this.up_left    = new UI_BooleanIcon(args, {'label': 'Up Left', 'active': 'up_left_active', 'inactive': 'up_left_inactive'}); 
+	this.up_right   = new UI_BooleanIcon(args, {'label': 'Up Right', 'active': 'up_right_active', 'inactive': 'up_right_inactive'}); 
+	this.down_left  = new UI_BooleanIcon(args, {'label': 'Down Left', 'active': 'down_left_active', 'inactive': 'down_left_inactive'}); 
+	this.down_right = new UI_BooleanIcon(args, {'label': 'Down Right', 'active': 'down_right_active', 'inactive': 'down_right_inactive'}); 
+
+	var table = $('<table />'); 
+	this.root.append(table); 
+
+	var tr = $('<tr />'); 
+	table.append(tr); 
 	
+	/* top */
+	var td = $('<td />');
+	td.append(this.up_left.root); 
+	tr.append(td); 
+
+	td = $('<td />');
+	td.append(this.up.root); 
+	tr.append(td); 
 	
-	var group = new UI_Group(args, 
-					{'uis': 
-						[this.move, this.up, this.down, this.left, this.right, this.up_left, this.up_right, this.down_left, this.down_right] 
-					}
-				); 
+	td = $('<td />');
+	td.append(this.up_right.root); 
+	tr.append(td); 
+
+	/* middle */
+	tr = $('<tr />'); 
+	table.append(tr); 
+
+	td = $('<td />');
+	td.append(this.left.root); 
+	tr.append(td); 
+
+	td = $('<td />');
+	td.append(this.move.root); 
+	tr.append(td); 
 	
-	this.root.append(group.root); 
+	td = $('<td />');
+	td.append(this.right.root); 
+	tr.append(td); 
+		
+	/* bottom */
+	tr = $('<tr />'); 
+	table.append(tr); 
+
+
+	td = $('<td />');
+	td.append(this.down_left.root); 
+	tr.append(td); 
+
+	td = $('<td />');
+	td.append(this.down.root); 
+	tr.append(td); 
 	
+	td = $('<td />');
+	td.append(this.down_right.root); 
+	tr.append(td); 
+
+	// ---
+		
 	this.update = function(mv){
 		if(mv){
 			this.move.update(mv.move); 

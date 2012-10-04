@@ -48,3 +48,47 @@ function UI_Boolean(args, defs){
 	
 }; 
 
+
+function UI_BooleanIcon(args, defs){
+	UI.call(this, args, defs); 
+	this.root = $('<div />'); 
+	
+	this.active = this.option('active'); 
+	this.inactive = this.option('inactive'); 
+	
+	
+	this.root.click(function(){
+		this.model.toogle(); 
+	}.bind(this)); 
+	
+	this.change = function(){
+		if(this.model){
+			if(this.model.get()){
+				this.root.attr('class', this.active); 
+			}else{
+				this.root.attr('class', this.inactive); 
+			}
+			
+		}else{
+			this.root.attr('inactive', this.inactive);
+		}
+	}.bind(this); 
+	
+	this.update = function(model){
+		if(this.model){
+			this.model.remove_event('change', this.change); 
+		}
+		this.model = model; 
+		if(this.model){
+			this.model.event('change', this.change); 	
+			this.change(); 
+		}
+	}; 
+	
+	this.update(this.option('model')); 
+	
+	
+}; 
+
+
+

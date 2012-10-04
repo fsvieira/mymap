@@ -62,6 +62,7 @@ function Model(args){
 	
 	this.toogle = function(){
 		this.field = !this.field; 
+		this.trigger_event(new Event(['change', 'set'], {'model':this}) ); 
 	}; 
 	
 	this.set = function(value){
