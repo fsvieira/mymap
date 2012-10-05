@@ -54,7 +54,15 @@ function UI_MapEditor(project, args, defs){
 
 	this.update(project);
 
+	this.animation = function(){
+		this.map_draw.animate(); 
+	}.bind(this); 
+
+	setInterval(this.animation, 1000/30);
+
 }; 
+
+
 
 
 

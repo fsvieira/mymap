@@ -363,8 +363,8 @@ function UI_TileManager(args, defs){
 function UI_TileManagers(args, defs){
 	UI.call(this, args, defs); 
 	
-	this.b1 = new UI_Button(args, {'label': 'Add'})
-    this.b2 = new UI_Button(args, {'label': 'Add Alpha'})
+	this.b1 = new UI_ButtonIcon(args, {'label': 'Add', 'active': 'add'});
+    this.b2 = new UI_ButtonIcon(args, {'label': 'Add Alpha', 'active': 'add_alpha'}); 
 	this.m  = new UI_Items(args, {'label': 'Maps',}); 	
 	// this.tm = new UI_TileManager(args, defs); 
 	var ui  = new UI_Group(args, {'uis': [this.b1,this.b2,  this.m]}); 

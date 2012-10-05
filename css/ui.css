@@ -42,7 +42,8 @@
 }
 
 
-
+.add, 
+.add_alpha,
 .move_active,
 .move_inactive,
 .up_active,
@@ -141,4 +142,14 @@
 	background-image:url('layout/down_right_disable.png');
 }
  
+
+/* Add */
+.add {
+	background-image:url('layout/add.png');
+}
+
+.add_alpha {
+	background-image:url('layout/add_alpha.png');
+}
+
 

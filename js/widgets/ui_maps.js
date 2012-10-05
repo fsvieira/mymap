@@ -54,7 +54,7 @@ function UI_Map(args, defs){
 function UI_Maps(args, defs){
 	UI.call(this,args, defs); 
 	
-	this.b = new UI_Button(args, {'label': 'Add'}); 
+	this.b = new UI_ButtonIcon(args, {'label': 'Add', 'active': 'add'}); 
 	this.m = new UI_Items(args, {'label': 'Maps', }); 	
 	// this.map = new UI_Map(args, defs); 
 	var ui =  new UI_Group(args, {'uis': [this.b, this.m]}); 

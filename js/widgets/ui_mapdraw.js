@@ -69,12 +69,21 @@ function UI_LayerDraw(layer, args, defs){
 		for(c in cells){
 			for(l in cells[c]){
 				var ui = new UI_Sprite(cells[c][l]); 
+				this.sprites.push(ui); 
 				this.root.append(ui.root); 
 				this.sprites.push(ui); 
 			}
 		}
 		
 	}; 
+	
+	this.animate = function(){
+		for(i in this.sprites){
+			this.sprites[i].frame(); 
+		}
+	}; 
+	
+	
 	
 	this.update(layer); 
 	
@@ -132,8 +141,7 @@ function UI_MapDraw(args, defs){
 	this.root.append(this.grid.root); 
 	this.layers_root = $('<div class="layers" />'); 
 	this.root.append(this.layers_root); 
-	// TODO: Draw Map.
-	// TODO: listing to tilemanagers/tile UI. 
+	
 	this.update_grid = function(){
 		this.grid.update(this.map.grid.get()); 
 		this.resize(this.map.grid.get()); 
@@ -164,6 +172,12 @@ function UI_MapDraw(args, defs){
 				this.layers[i].resize(w, h); 
 			}
 		}; 
+	}; 
+	
+	this.animate = function(){
+		for(i in this.layers){
+			this.layers[i].animate(); 
+		}
 	}; 
 	
 	this.update = function(map){

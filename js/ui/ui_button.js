@@ -20,3 +20,23 @@ function UI_Button(args, defs){
 	}; 
 	
 }; 
+
+
+function UI_ButtonIcon(args, defs){
+	UI.call(this, args, defs); 
+
+	this.func = this.option('func'); 
+
+	this.root = $('<div class="'+this.option('active') +'" />'); 
+	
+	this.root.click(function(){
+			if(this.func){
+				this.func(); 
+			}
+	}.bind(this)); 
+
+	this.update = function(func){
+		this.func = func; 
+	}; 
+	
+}; 
