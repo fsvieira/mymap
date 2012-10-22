@@ -91,6 +91,8 @@ function Cell(position){
 			}
 			
 		}
+		
+		// this.trigger_event(new Event(['change'], {'model': this}));
 	}; 
 
 	this.getPosition = function(){

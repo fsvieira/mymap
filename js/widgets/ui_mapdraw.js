@@ -1,5 +1,5 @@
 function UI_Sprite(cell, args, defs){
-	UI.call(this, cell, args, defs); 
+	UI.call(this,args, defs); 
 	
 	this.canvas_elem = document.createElement('canvas'); 
 	this.canvas = this.canvas_elem.getContext('2d'); 
@@ -10,6 +10,12 @@ function UI_Sprite(cell, args, defs){
 	
 	this.cell = cell; 
 	this.counter = 0; 
+
+	this.cell.event('change', function(e){
+		this.update(e.args.model); 
+	}.bind(this));
+	
+	 
 
 	this.frame = function(){	
 		this.canvas.putImageData(
